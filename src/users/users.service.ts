@@ -14,8 +14,12 @@ export class UsersService {
     return this.repo.save(user);
   }
 
-  findOne(id: number) {
-    const user = this.repo.findOneBy({ id });
+  async findOne(id: number) {
+    const user = await this.repo.findOneBy({ id });
+
+    if (!user) {
+      throw new NotFoundException('user with id:' + id + 'cannot be found');
+    }
 
     return user;
   }
@@ -40,7 +44,7 @@ export class UsersService {
     const user = await this.repo.findOneBy({ id });
 
     if (!user) {
-      throw new NotFoundException('user with id:' + id + 'cannot be found');
+      throw new NotFoundException(`user with id: ${id} cannot be found`);
     }
 
     return this.repo.remove(user);
