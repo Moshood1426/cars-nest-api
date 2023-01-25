@@ -8,7 +8,7 @@ export class SerializeInterceptor implements NestInterceptor {
   constructor(private dto: any) {}
   intercept(context: ExecutionContext, handler: CallHandler): Observable<any> {
     //before request is handled
-    console.log('who dey');
+    
     return handler.handle().pipe(
       map((data: any) => {
         //before response is sent out
