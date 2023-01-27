@@ -2,7 +2,7 @@ import {
   BadRequestException,
   NotFoundException,
   Injectable,
-  
+
 } from '@nestjs/common/';
 import { UsersService } from './users.service';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
@@ -18,7 +18,7 @@ export class AuthService {
     const userExists = await this.usersService.find(email);
 
     if (userExists.length) {
-      throw new BadRequestException('User with email exists');
+      throw new BadRequestException();
     }
 
     const salt = randomBytes(8).toString('hex');

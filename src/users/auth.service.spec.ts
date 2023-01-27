@@ -1,3 +1,8 @@
+import {
+  BadRequestException,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common/exceptions';
 import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { User } from './users.entity';
@@ -40,8 +45,24 @@ describe('AuthService', () => {
         { id: 1, email: 'harbdoul@gmail.com', password: 'asddsf' } as User,
       ]);
 
-    const user = await service.signup("harbdoul@gmail.com", "assdsre")
-    expect(user).rejects.toThrow("User with email exists")
+    const user = await service.signup('harbdoul@gmail.com', 'assdsre');
+    expect(user).rejects.toThrow(BadRequestException);
+  });
 
+  it('throws if signin is called with unused email', async () => {
+    const result = await service.signin('asdf@gmail.com', 'sdjkb');
+
+    expect(result).rejects.toThrow(NotFoundException);
+  });
+
+  it('throws if password is not correct', async () => {
+    fakeUsersService.find = () =>
+      Promise.resolve([
+        { id: 1, email: 'harbdoul@gmail.com', password: 'asddsf' } as User,
+      ]);
+
+    const user = await service.signin("harbdoul@gmail.com", "abcde")
+
+    expect(user).rejects.toThrow(UnauthorizedException)
   });
 });
