@@ -2,7 +2,7 @@ import {
   BadRequestException,
   NotFoundException,
   UnauthorizedException,
-} from '@nestjs/common/exceptions';
+} from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { User } from './users.entity';
@@ -61,8 +61,8 @@ describe('AuthService', () => {
         { id: 1, email: 'harbdoul@gmail.com', password: 'asddsf' } as User,
       ]);
 
-    const user = await service.signin("harbdoul@gmail.com", "abcde")
+    const user = await service.signin('harbdoul@gmail.com', 'abcde');
 
-    expect(user).rejects.toThrow(UnauthorizedException)
+    expect(user).rejects.toThrow(UnauthorizedException);
   });
 });
