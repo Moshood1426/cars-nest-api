@@ -11,7 +11,9 @@ export class ReportsService {
     private readonly reportsRepo: Repository<Reports>,
   ) {}
 
-  create(body: CreateReportDto) {
-    
+  create(reportDto: CreateReportDto) {
+    const report = this.reportsRepo.create(reportDto)
+
+    return this.reportsRepo.save(report)
   }
 }

@@ -18,7 +18,7 @@ export class AuthService {
     const userExists = await this.usersService.find(email);
 
     if (userExists.length) {
-      throw new BadRequestException();
+      throw new BadRequestException("user with email exists");
     }
 
     const salt = randomBytes(8).toString('hex');
