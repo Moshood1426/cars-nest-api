@@ -16,7 +16,7 @@ describe('UsersController', () => {
   beforeEach(async () => {
     fakeAuthService = {
       signup: (email: string, password: string) =>
-        Promise.resolve({ id: 1, email, password }),
+        Promise.resolve({ id: 1, email, password } as User),
       signin: (email: string, password: string) =>
         Promise.resolve({ id: 1, email, password } as User),
     };
@@ -35,7 +35,7 @@ describe('UsersController', () => {
       // remove: () => {},
       // update: () => {},
     };
-    
+
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
       providers: [
